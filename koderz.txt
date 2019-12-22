@@ -1,0 +1,33 @@
+﻿OPTIMAL PATH-TIME
+
+Description
+Traffic has become a major problem in today’s date. Now a days, traffic issues have neglected the importance of time management in people’s life . The project is aiming at predicting the appropriate route and appropriate time for travelling to a specific destination.
+There will be an application that accepts some inputs
+from the users such as:-
+Desired Destination
+Desired Date
+Now, the application analysis the past data and provide
+:-
+The best time to travel
+The most appropriate route to be followed.
+Such an application will help saving ample amount of valuable time that is usually wasted due to the traffic problems that are not being analysed at all. 
+
+Contents of the project directory
+
+route_prediction
+	src
+		templates
+			c02.jpg
+			index.html
+		__init__.py
+		app.py
+	.gitignore
+	requirements.txt
+
+WAYS TO HOST THE PROJECT ON LOCALHOST
+Clone the repo
+Install python
+Install Pycharm
+Install the Requirements as mentioned in requirements.txt
+Run src/app.py in Pycharm
+Open http://localhost:port/ in the Web Browser

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <title>Koderz Hack</title>
+    <style type="text/css">
+        * {
+            font-family: sans-serif;
+        }
+        body
+        {
+            background-image: url("c02.jpg");
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        label
+        {
+            font-size: 20px;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+</head>
+<body>
+<center>
+    <h1><u>Optimal Path - Time</u></h1>
+    <form method="post" id="form">
+        <table>
+            <tr>
+                <th style="text-align: left;"><label for="src">Enter Source: </label></th>
+                <!--<select id="src">
+                <option value="JanakPuri">Janak Puri</option>
+                <option value="Okhla">Okhla</option>
+                <option value="Noida">Noida</option>
+                <option value="Kalkaji">Kalkaji</option>
+                </select>-->
+                <td>
+                    <input type="text" id="src" length="200">
+                </td>
+            </tr>
+
+            <tr>
+                <th style="text-align: left;"><label for="dsc">Enter Destination: </label></th>
+                <!--<select id="dsc">
+                <option value="JanakPuri">Janak Puri</option>
+                <option value="Okhla">Okhla</option>
+                <option value="Noida">Noida</option>
+                <option value="Kalkaji">Kalkaji</option>
+                </select>-->
+                <br>
+                <td>
+                    <input type="text" id="dsc" length="200">
+                </td>
+            </tr>
+
+            <tr>
+                <th style="text-align: left;"><label for="dt">Select Date: </label></th>
+                <td>
+                    <input type="date">
+                </td>
+            </tr>
+            <!--<input type="text" id="num" name="number" autofocus autocomplete="off">-->
+
+            <tr>
+                <td colspan="2"><button>Submit</button></td>
+            </tr>
+        </table>
+    </form>
+    <h3>
+        <p id="display"></p>
+</center>
+<script>
+    $('#form').on('submit', function(e){
+        var source = $('#src').val();
+        var destination = $('#dsc').val();
+        e.preventDefault();
+        $.ajax({
+            url: 'http://127.0.0.1:5000/square/',
+            data:   {'source': source, 'destination': destination},
+            method: 'POST',
+            success: function(data) {
+                point = [];
+                point = data['geometry'];
+                tm = data['time'];
+//$('#square').html('Points Between ' + source + ' and ' + destination + ' is ' + points)
+            }
+        });
+        encoded = point;
+        var points = [],index = 0, len = encoded.length;
+        var lat = 0, lng = 0;
+        while (index < len) {
+            var b, shift = 0, result = 0;
+            do {
+                b = encoded.charAt(index++).charCodeAt(0) - 63;
+                result |= (b & 0x1f) << shift;
+                shift += 5;
+            } while (b >= 0x20);
+            var dlat = ((result & 1) !== 0 ? ~(result >> 1) : (result >> 1));
+            lat += dlat;shift = 0;result = 0;
+            do {
+                b = encoded.charAt(index++).charCodeAt(0) - 63;
+                result |= (b & 0x1f) << shift;
+                shift += 5;
+            } while (b >= 0x20);
+            var dlng = ((result & 1) !== 0 ? ~(result >> 1) : (result >> 1));
+            lng += dlng;points.push([lat / 1E5, lng / 1E5])
+        }
+        var len1 = points.length;
+        var str = "<center><h3><u>OUTPUT</u></h3><br><u>Points on the Optimal Route(for Driving) are:</u><br><br>";
+        for(var i=0; i<len1; i++)
+        {
+            let request = new XMLHttpRequest();
+            let lt=points[i][0];
+            let lg=points[i][1];
+            console.log(lt);
+            console.log(lg);
+            let URL = "http://apis.mapmyindia.com/advancedmaps/v1/ejls5j1jcdu6z9w1pabuytir9wwituo8/rev_geocode?lat="+lt+"&lng="+lg;
+            request.open('GET', URL, false)
+            request.onload = function() {
+                console.log(this.response)
+                let data = JSON.parse(this.response)
+                str = str + data.results[0].formatted_address + "<br><br>";
+//console.log(data[0]);
+//console.log(data.results[0].formatted_address);
+            }
+            request.send();
+        }
+        str = str + "Time Required is: " + tm + "<br>";
+        $('#display').html(str);
+        //$('#display').html('<center><h3><u>OUTPUT</u></h3><br>Points on the Optimal Route are: '+points+'<br>Time Required is: '+tm+'</center>');
+    });
+</script>
+</body>
+</html>
