@@ -1,0 +1,24 @@
+Proposed Solution :
+
+An Android App consisting of many features to control the increasing crime rates.
+First Feature we are providing is a Secured Hashed Algorithm Backed QR Code(SHATag)
+which will work by scanning the SHATag while someone is boarding the public vehicle, 
+SHATag is secured mechanism to be provided by Govt. on verification of Drivers and 
+Cabs, Buses and other public Vehicles. Scanning the QR Code, will enable the user to 
+verify the service provider.
+After Scanning Code, Realtime Location of the Vehicle will be shared with the Concerned 
+family and  authorities.
+Secondly, we are providing some in built feature of app, that allows user on the way 
+go create an emergency alarm, to the user’s relatives and authorities.
+Another proposed solution is we can share audio input of the incident via app.
+
+
+Modules Of Our App :
+1. Register Page
+2. Otp Verification
+3. Imergency Contacts Submission
+4. Scan SHATag QR
+5. Send Live Location
+
+How To Host :
+Project can be hosted on any Android Device Using Android Studio
