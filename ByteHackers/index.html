@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ngStorage/0.3.10/ngStorage.min.js"></script>
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<style>
+body
+{
+  height:100%;
+    width:100%;
+    background-image: url('./assets/handshake.jpeg');
+    background-repeat:no-repeat;/*we want to have one single image not a repeated one*/  
+    background-size:cover;
+}
+</style>
+<body ng-app="citySolver" ng-controller = "mainController">
+
+<div class="col-md-4"></div>
+<a href="/" class="col-md-4">Home</a>
+<a href="#!login">Login</a>
+<a href="#!signup">Signup</a>
+
+
+<br>
+
+<div class="container">
+    <div id="loginbox" style="margin-top:20px" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">                    
+            <div class="panel panel-info" >
+                    <div class="panel-heading">
+                        <div class="panel-title" padding-left = "60px">CitySolver</div>
+                        <div style="float:right; font-size: 80%; position: relative; top:-10px"><a href="#">Forgot password?</a></div>
+                    </div>     
+    
+                    <div style="padding-top:30px" class="panel-body" >
+    
+                        <div style="display:none" id="login-alert" class="alert alert-danger col-sm-12"></div>
+                            
+                        <form id="loginform" class="form-horizontal" role="form">
+
+                                <div class="form-group">
+                                        <div class="col-md-4">
+                                            <input class="btn btn-screen" type="button" value = "Post An Issue" ng-model = "postIssue" ng-click = "postIssues()">
+                                          </div>
+                                    </div>
+                                <div class="form-group ui-review">
+                                    <div class="col-md-4">
+                                        <input class="btn btn-screen" type="button" value = "Show Issues" ng-model = "showIssue" ng-click = "showIssues()">
+                                      </div>
+                                </div>
+    
+                                <div style="margin-top:10px" class="form-group">
+                                    <!-- Button -->
+    
+                                    </div>
+                                </div>
+       
+                            </form>     
+    
+    
+    
+                        </div>                     
+                    </div>  
+</div>
+	
+<script>
+    var app = angular.module("citySolver", ["ngRoute","ngStorage"]);
+    app.controller('mainController', function($scope,$location,$localStorage,$http) {
+    $scope.postIssue = false;
+    $scope.showIssue = false;
+    $scope.homes = 1;
+    $scope.arr = {};
+    $scope.arr.gender = "male";
+    $scope.postIssues  = function()
+        {
+          console.log("issue");  
+          $scope.postIssue = true;
+            $scope.homes = true;
+            //$window.localStorage.isLogin;
+            //$location.path('/login');
+            if($localStorage.token)
+              {
+                $location.path('/postissue');
+              }
+            else
+              {
+                $location.path('/login');
+              }
+          }
+          $scope.getListing = function()
+                {
+                  console.log($scope.arr);
+                  //$scope.home = false;
+
+                  $http({
+                        method: 'POST',
+                        url: 'http://localhost:3000/getProblems',
+                        headers: {
+                            'content-Type': 'application/json',
+                            'Authorization':$localStorage.token
+                        }
+                    })
+                    .then(function (response) {
+                      console.log($scope.arr);
+                      $scope.data = response.data.data.values;
+                      console.log(response.data.data.values);
+                      $scope.imgname = "water department";
+                      /*foreach(data in response.data)
+                        {
+                          $scope.title[$index] = data.title;
+                          $scope.department[$index] = data.department;
+                          $scope.description[$index] = data.description;
+                        }*/
+                      //$localStorage.token = "abc.1.xyz";
+                        console.log("hello");
+                    });
+                }
+
+    $scope.showIssues = function()
+        {
+            $scope.showIssue = true;
+            $scope.home = 0;
+            $scope.getListing();
+            if($localStorage.token)
+              {
+                $location.path('/listing');
+
+              }
+            else
+              {
+                $location.path('/login');
+              }
+            console.log("hdjs");
+        }
+    $scope.checkLogin = function()
+                {
+                  console.log($scope.arr);
+                    $http({
+                        method: 'POST',
+                        url: 'http://localhost:3000/login',
+                        headers: {
+                            'content-Type': 'application/json',
+                            'Authorization':"abc.1.xyz"
+                        },
+                        data:$scope.arr
+                    })
+                    .then(function (response) {
+                      console.log(response);
+                        $localStorage.token = response.data.data.token;
+                        $location.path('/');
+                        console.log("hello");
+                    });
+                }
+                $scope.checkSignup = function()
+                {
+                  console.log($scope.arr);
+                    $http({
+                        method: 'POST',
+                        url: 'http://localhost:3000/signup',
+                        headers: {
+                            'content-Type': 'application/json',
+                            'Authorization':"abc.1.xyz"
+                        },
+                        data:$scope.arr
+                    })
+                    .then(function (response) {
+                      $localStorage.token = response.data.data.token;
+                      $location.path('/');
+                    });
+                }
+
+//});
+
+
+
+$scope.postIssuedone = function()
+                {
+                  
+                  console.log($scope.arr);
+                  $scope.arr.lat = 12;
+                  $scope.arr.long = 21;
+                  console.log($scope.arr.image);
+                  $http({
+                        method: 'POST',
+                        url: 'http://localhost:3000/addProblem',
+                        headers: {
+                            'content-Type': 'application/json',
+                            'Authorization':$localStorage.token
+                        },
+                        data:$scope.arr
+                    })
+                    .then(function (response) {
+                      console.log($scope.arr);
+                        //$localStorage.token = "abc.1.xyz";
+                        console.log("hello");
+                    });
+                }
+  $scope.upvote = function(id)
+  {
+    
+    $http({
+                        method: 'POST',
+                        url: 'http://localhost:3000/addVote/'+'up/'+id,
+                        headers: {
+                            'content-Type': 'application/json',
+                            'Authorization':$localStorage.token
+                        },
+                    })
+                    .then(function (response) {
+                      console.log($scope.arr);
+                        //$localStorage.token = "abc.1.xyz";
+                        console.log("hello");
+                    });
+    $scope.upvotecount++;
+  }
+  $scope.downvote = function(id)
+  {
+    $http({
+                        method: 'POST',
+                        url: 'http://localhost:3000/addVote/'+'down/'+id,
+                        headers: {
+                            'content-Type': 'application/json',
+                            'Authorization':$localStorage.token
+                        },
+                    })
+                    .then(function (response) {
+                      console.log($scope.arr);
+                        //$localStorage.token = "abc.1.xyz";
+                        console.log("hello");
+                    });
+    $scope.downvotecount++;
+  }
+  function encodeImageFileAsURL(element) {
+  var file = element.files[0];
+  var reader = new FileReader();
+  reader.onloadend = function() {
+    console.log('RESULT', reader.result)
+  }
+  reader.readAsDataURL(file);
+}
+
+});
+
+
+    app.config(function($routeProvider) {
+        $routeProvider
+        .when("/home", {
+            templateUrl : "index.html"
+        })
+        .when("/login", {
+            templateUrl : "login.html"
+        })
+        .when("/signup", {
+            templateUrl : "signup.html",
+
+        })
+        .when("/postissue", {
+            templateUrl : "postissue.html"
+        })
+        .when("/listing", {
+            templateUrl : "listing.html"
+        });
+    });
+    </script>
+    
+
+</body>
+<div ng-view></div>
+
+</html>
+
+
+

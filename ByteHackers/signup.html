@@ -1,0 +1,168 @@
+<!------ Include the above in your HEAD tag ---------->
+<!DOCTYPE html>
+<html>
+<body ng-app="citySolver" ng-controller = "signupController">
+    <div class="container">    
+        <div id="signupbox" style="margin-top:50px" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <div class="panel-title">Sign Up</div>
+                            <div style="float:right; font-size: 85%; position: relative; top:-10px"><a id="signinlink" href="#" onclick="$('#signupbox').hide(); $('#loginbox').show()">Sign In</a></div>
+                        </div>  
+                        <div style="padding-top:30px" class="panel-body" >
+                            <form id="signupform" class="form-horizontal" role="form">
+                                
+                                <div id="signupalert" style="display:none" class="alert alert-danger">
+                                    <p>Error:</p>
+                                    <span></span>
+                                </div>
+                                             
+                                <div class="input-group">
+                                        <div class="radio" class="col-md-3 control-label">
+                                            <input type="radio" name="user" ng-model="arr.role" value="0">User
+                                        </div>
+                                                <input type="radio" name="admin" ng-model="arr.role" value="1">Admin
+                                      </div>
+                                <div class="form-group" ng-if = "arr.role == 1">
+                                            <label for="name" class="col-md-3 control-label">Department</label>
+                                            <div class="col-md-9">
+                                                    <select class="form-control" ng-model="arr.department" placeholder="Select Department">
+                                                            <option selected>Electricity</option>
+                                                            <option>pwd</option>
+                                                            <option>Water</option>
+                                                            <option>Municipality</option>
+                                                    </select>                                           </div>
+                                        </div>
+                                <div class="form-group">
+                                    <label for="name" class="col-md-3 control-label">Name</label>
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control" ng-model="arr.name" placeholder="Name">
+                                    {{arr.name}}
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="mobile" class="col-md-3 control-label">Mobile</label>
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control" ng-model="arr.mobile" placeholder="Mobile">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                        <label for="email" class="col-md-3 control-label">Email</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" ng-model="arr.email" placeholder="Email Address">
+                                        </div>
+                                    </div>
+                                <div class="form-group">
+                                    <label for="password" class="col-md-3 control-label">Password</label>
+                                    <div class="col-md-9">
+                                        <input type="password" class="form-control" ng-model="arr.password" placeholder="Password">
+                                    </div>
+                                </div>
+                                    
+                                <div class="form-group">
+                                    <label for="icode" class="col-md-3 control-label">City</label>
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control" ng-model="arr.city" placeholder="City">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                        <label for="icode" class="col-md-3 control-label">Pincode</label>
+                                        <div class="col-md-9">
+                                            <input type="number" class="form-control" ng-model="arr.pincode" placeholder="Pincode">
+                                        </div>
+                                    </div>
+
+                                <div class="form-group">
+                                    <!-- Button -->                                        
+                                    <div class="col-md-offset-3 col-md-9">
+                                        <button id="btn-signup" type="button" class="btn btn-info" ng-click = "checkSignup()"><i class="icon-hand-right"></i> &nbsp Sign Up</button>
+                                    </div>
+                                </div>
+                                
+                                
+                                
+                                
+                            </form>
+                         </div>
+                    </div>
+
+               
+               
+                
+         </div> 
+    </div>
+    
+    </div>
+    </body>
+    </html>
+<!--    <script>
+            var app = angular.module('citySolver', ["ngRoute","ngStorage"]);
+            app.controller('signupController', function($scope,$localStorage,$http) {
+                $scope.signup = false;
+                $scope.login = false;
+                $scope.arr = [];
+                console.log("adghad");
+
+                $scope.checkLogin = function()
+                {
+                    console.log("adghad");
+                    $http({
+                        method: 'POST',
+                        url: './signup',
+                        headers: {
+                            'content-Type': 'application/json'
+                        },
+                        form:$scope.arr
+                    })
+                    .success(function (response) {
+                        $window.localStorage.token = "abc.1.xyz";
+                        console.log("hello");
+                    });
+                }
+            });
+
+            </script>-->
+            <script>
+                    var app = angular.module("citySolver", ["ngRoute","ngStorage"]);
+                    app.controller('signupController', function($scope,$location,$localStorage) {
+                    $scope.postIssue = false;
+                    $scope.showIssue = false;
+                    $scope.home = true;
+                    $scope.postIssues  = function()
+                        {
+                          console.log("issue");  
+                          $scope.postIssue = true;
+                            $scope.home = false;
+                            //$window.localStorage.isLogin;
+                            //$location.path('/login');
+                            $location.path('/signup');
+                
+                          }
+                    $scope.showIssues = function()
+                        {
+                            $scope.showIssue = true;
+                            $scope.home = false;
+                            $location.path('/red');
+                            console.log("hdjs");
+                        }
+                });
+                
+                    app.config(function($routeProvider) {
+                        $routeProvider
+                        .when("/login", {
+                            templateUrl : "login.html"
+                        })
+                        .when("/signup", {
+                            templateUrl : "signup.html",
+                
+                        })
+                        .when("/blue", {
+                            templateUrl : "login.html"
+                        });
+                    });
+                    </script>
+                          
+            
+            
+    

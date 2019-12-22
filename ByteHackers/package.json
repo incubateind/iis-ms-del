@@ -1,0 +1,23 @@
+{
+  "name": "citysolver",
+  "version": "0.0.1",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "express": "^4.16.3",
+    "static-favicon": "~1.0.0",
+    "morgan": "~1.0.0",
+    "cookie-parser": "~1.0.1",
+    "body-parser": "~1.0.0",
+    "sequelize": "^4.37.10",
+    "sequelize-cli": "^4.0.0",
+    "mysql2": "^1.5.3",
+    "cors": "^2.8.4",
+    "request": "^2.88.0",
+    "request-promise": "^4.2.4"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.3"
+  }
+}
