@@ -1,0 +1,8 @@
+Ways to host our project:
+1. Import Both the projects in Android Studios
+2. Run one by one
+
+About the andorid project:
+1. AASHA - This app is music player integrated with AI bot and other unique features to console the user if he is in depression or stressed. 
+
+2. AASHA_PSY - This app is for psychiatrists who will get the reports of the users who are detected to be depressed.

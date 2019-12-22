@@ -1,0 +1,12 @@
+﻿AASHA
+Aasha basically looks like a music app in the first look but when we dive into it we see that there are some tools built in the app itself to tackle the issue of mental health. 
+Problem statement: A large portion of the population of India (70 Lakhs/Year) commit suicide every year due to mental stress and illness. This leads to depression or hypertension and sometimes they may take drastic steps such as suicide. So, we provide an application which can detect the people who are facing stress and about to take any drastic step and provide tools to aid them and relax them out.
+Solution: Develop an application which will have AI Chatbot. Following are the features of chatbot
+1. It talks to the user as his friend and analyzes the behavior, consoles and motivates him without compromising his privacy
+2. It does Psychometric test (PHQ-2 and PHQ-9) to analyze the user mindset.
+3.Guides and encourages user to different activities to lift mood and professional help
+The songs that are added in database were classified into different categories by applying NLP (Natural Language Processing) model on the song description. After that, if a user plays any sad song a few number of times in a row then chatbot Shampo prompts the user to take PHQ2 test. PHQ2 test is basically the first step towards diagnosis of depression. After the test the condition of the user is displayed and if the condition is leaning towards depression or already suffering from depression than the report is also shared with Psychiatrists who have a different app with functionalities to connect to the diagnosed user. Basically, chatbot Shampo acts as a friend to the user and listens to any problems, likes or dislikes. After that the chatbot guides the user towards some basic daily activities which if done regularly help in lifting our mood like walking, meditating etc. On the basis of the regular participation of the user number of points are added into the wallet of user. These points can be redeemed at different brick and mortar stores.
+The inclusion of coupons from brick and mortar stores serves two purposes
+1)The sales of brick and mortar stores is decreasing  due to the e-commerce platforms.
+2)The user suffering from depression would like to isolate himself from everyone but different offers and benefits encourage him to get out of his home interact with the surroundings. 
+Tech Stack: Microsoft Azure, Android Studios, Machine Learning, Natural Language Processing.
