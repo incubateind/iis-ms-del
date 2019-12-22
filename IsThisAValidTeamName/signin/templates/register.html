@@ -1,0 +1,156 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Register{% endblock %}
+{% block body %}class='login-page'{% endblock %}
+
+{% block nav %}
+<nav class="navbar navbar-expand-lg  fixed-top navbar-transparent " color-on-scroll="300">
+    <div class="container">
+        <div class="navbar-translate">
+            <a href="{% url 'index' %}" class="navbar-brand" data-placement="bottom" >
+                <img src="{% static 'img/fifthstrategy_logo_TGL.svg' %}"> Fifth Strategy
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-bar bar1"></span>
+                <span class="navbar-toggler-bar bar2"></span>
+                <span class="navbar-toggler-bar bar3"></span>
+            </button>
+        </div>
+        <div class="collapse navbar-collapse" id="navigation">
+            <div class="navbar-collapse-header">
+                <div class="row">
+                    <div class="col-6 collapse-brand">
+                        <a href="{% url 'index' %}">
+                            Fifth Strategy
+                        </a>
+                    </div>
+                    <div class="col-6 collapse-close text-right">
+                        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+                            <i class="tim-icons icon-simple-remove"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a href="{% url 'login' %}" class="nav-link">
+                        <i class="tim-icons icon-tablet-2"></i> Login</a>
+                    </li>
+                <li class="nav-item">
+                    <a href="{% url 'register' %}" class="nav-link">
+                        <i class="tim-icons icon-laptop"></i> Register
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+{% endblock %}
+
+{% block content %}
+<div class="squares square1"></div>
+<div class="squares square2"></div>
+<div class="squares square3"></div>
+<div class="squares square4"></div>
+<div class="squares square5"></div>
+<div class="squares square6"></div>
+<div class="page-header">
+    <div class="page-header-image"></div>
+    <div class="container">
+        <div class="col-lg-5 col-md-8 mx-auto">
+            <div class="card card-login">
+                <form class="form" method="POST" action="" id="registerForm">
+                    {% csrf_token %}
+                    <div class="card-header">
+                        <img class="card-img mt-0" src="{% static 'img/login-bg.png' %}" alt="Card image">
+                        <h4 class="card-title ml-3" style="color:#fff">Register</h4>
+                    </div>
+                    <div class="card-body mt-4">
+                        <div id="message"></div>
+                        <div class="input-group input-lg">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="tim-icons icon-single-02"></i></span>
+                            </div>
+                            <input type="text" class="form-control" placeholder="First Name" name=first_name required >
+                        </div>
+                        
+                        <div class="input-group input-lg">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="tim-icons icon-single-02"></i></span>
+                            </div>
+                            <input type="text" class="form-control" placeholder="Last Name" name=last_name required >
+                        </div>
+                        
+                        <div class="input-group input-lg">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="tim-icons icon-single-02"></i></span>
+                            </div>
+                            <input type="text" class="form-control" placeholder="Username" name=username required >
+                        </div>
+                        
+                        <div class="input-group input-lg">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="tim-icons icon-single-02"></i></span>
+                            </div>
+                            <input type="email" class="form-control" placeholder="Email" name=email required >
+                        </div>
+
+                        <div class="input-group input-lg">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="tim-icons icon-key-25"></i></span>
+                            </div>
+                            <input type="password" class="form-control" placeholder="Password" name=password required >
+                        </div>
+                    </div>
+                    <div class="card-footer text-center">
+                        <button class="btn btn-primary btn-round btn-lg btn-block">Get Started</button>
+                    </div>
+                    <div class="pull-left ml-3 mb-3">
+                        <h6>
+                            <a href="{% url 'login' %}" class="link footer-link">Login</a>
+                        </h6>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block footer %}
+<script>
+$("#registerForm").submit(e => {
+    e.preventDefault()
+
+    const form = $("#registerForm")
+
+    const div = $("#message")
+    const username = form.find("[name='username']").val()
+    const password = form.find("[name='password']").val()
+
+    div.html("<h4 class='text-info text-center' ><i class='fas fa-spinner fa-spin' ></i> Loading...")
+    $.post("", form.serialize(), resp => {
+        
+        div.html("<h4 class='text-success text-center' ><i class='fas fa-check-circle' ></i> Successfully registered you!</h4>")
+
+        const f = $(`<form method=post action='{% url 'login' %}' ><input type=hidden name=username value='" + username + "' /><input type=hidden name=password value='" + password + "' />{% csrf_token %}</form>`)
+        $(document.body).append(f)
+
+        f.submit()
+    }).error(err => {
+        // console.log(err);
+
+        if(err.responseJSON) {
+            div.html("<h4 class='text-danger text-center' >Oops. Could not register you</h4>")
+            const data = err.responseJSON
+            Object.keys(data).forEach(key => {
+                $("[name='" + key + "']").addClass("form-control-danger").prop("title", data[key].join(",")).parents(".input-group").addClass("has-danger")
+            })
+        }
+        else {
+            div.html("<h4 class='text-danger text-center' >Could not register you</h4>")
+        }
+    })
+})
+</script>
+{% endblock %}

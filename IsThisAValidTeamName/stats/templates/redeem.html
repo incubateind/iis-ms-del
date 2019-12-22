@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Redeem{% endblock %}
+{% block body %}class='login-page'{% endblock %}
+
+{% block nav %}
+<nav class="navbar navbar-expand-lg  fixed-top navbar-transparent " color-on-scroll="300">
+    <div class="container">
+        <div class="navbar-translate">
+            <a href="{% url 'index' %}" class="navbar-brand" data-placement="bottom" >
+                <img src="{% static 'img/fifthstrategy_fulllogowhite_TGL.svg' %}">
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-bar bar1"></span>
+                <span class="navbar-toggler-bar bar2"></span>
+                <span class="navbar-toggler-bar bar3"></span>
+            </button>
+        </div>
+        <div class="collapse navbar-collapse" id="navigation">
+            <div class="navbar-collapse-header">
+                <div class="row">
+                    <div class="col-6 collapse-brand">
+                        <a href="{% url 'index' %}">
+                            Fifth Strategy
+                        </a>
+                    </div>
+                    <div class="col-6 collapse-close text-right">
+                        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+                            <i class="tim-icons icon-simple-remove"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a href="{% url 'login' %}" class="nav-link">
+                        <i class="fas fa-home"></i> Home
+                    </a>
+                </li>
+                <!-- <li class="nav-item">
+                    <a href="{% url 'register' %}" class="nav-link">
+                        <i class="tim-icons icon-laptop"></i> Register
+                    </a>
+                </li> -->
+            </ul>
+        </div>
+    </div>
+</nav>
+{% endblock %}
+
+{% block content %}
+<div class="squares square1"></div>
+<div class="squares square2"></div>
+<div class="squares square3"></div>
+<div class="squares square4"></div>
+<div class="squares square5"></div>
+<div class="squares square6"></div>
+<div class="page-header">
+    <div class="page-header-image"></div>
+    <div class="container">
+        <div class="col-lg-5 col-md-8 mx-auto">
+            <div class="card card-login">
+                <form class="form" method="POST" action="">
+                    <div class="card-header">
+                        <img class="card-img mt-0" src="{% static 'img/login-bg.png' %}" alt="Card image">
+                        <h4 class="card-title ml-3" style="color:#fff">Redeem</h4>
+                    </div>
+                    <div class="card-body mt-4">
+                        <div class="input-group input-lg">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-exclamation-triangle"></i></span>
+                            </div>
+                            Are you sure?
+                            <input type="text" class="form-control" placeholder="Are you sure?" name=sure >
+                        </div>
+                        <div class="input-group input-lg">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="tim-icons icon-key-25"></i></span>
+                            </div>
+                            <input type="password" class="form-control" placeholder="password" name=password >
+                        </div>
+                    </div>
+                    <div class="card-footer text-center">
+                        <a href="#pablo" class="btn btn-primary btn-round btn-lg btn-block">Login</a>
+                    </div>
+                    <!-- <div class="pull-left ml-3 mb-3">
+                        <h6>
+                            <a href="{% url 'register' %}" class="link footer-link">Create Account</a>
+                        </h6>
+                    </div> -->
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+<script>
+function showalert() {
+    Swal.fire({
+    title: 'Are you sure?',
+    text: "You won't be able to revert this!",
+    type: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Yes, redeem!'
+    }).then((result) => {
+    if (result.value) {
+        Swal.fire(
+        'Redeemed Successfully!',
+        'Amount will be added in 3-4 business working days',
+        'success'
+        )
+    }
+})
+}
+</script>
+{% endblock %}

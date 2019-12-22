@@ -1,0 +1,338 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Home{% endblock %}
+{% block body %}class='profile-page'{% endblock %}
+
+{% block nav %}
+<nav class="navbar navbar-expand-lg navbar-transparent " color-on-scroll="300">
+    <div class="container">
+        <div class="navbar-translate">
+            <a href="{% url 'index' %}" class="navbar-brand" data-placement="bottom" >
+                <img src="{% static 'img/fifthstrategy_fulllogowhite_TGL.svg' %}">
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-bar bar1"></span>
+                <span class="navbar-toggler-bar bar2"></span>
+                <span class="navbar-toggler-bar bar3"></span>
+            </button>
+        </div>
+        <div class="collapse navbar-collapse" id="navigation">
+            <div class="navbar-collapse-header">
+                <div class="row">
+                    <div class="col-6 collapse-brand">
+                        <a href="{% url 'index' %}">
+                            Fifth Strategy
+                        </a>
+                    </div>
+                    <div class="col-6 collapse-close text-right">
+                        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+                            <i class="tim-icons icon-simple-remove"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <ul class="nav nav-pills nav-pills-primary ml-auto" role="tablist">
+                <li class="nav-item home-nav">
+                    <a href="{% url 'invest' %}" class="nav-link"  role="tablist">
+                        Invest
+                    </a>
+                </li>
+                <li class="nav-item home-nav">
+                    <a href="{% url 'logout' %}" class="nav-link"  role="tablist">
+                        Logout
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div class="page-header-image"></div>
+    <div class="container pt-1">
+        <div class="row">
+            <div class="col-lg-6 col-12 text-center">
+                <h1 class="profile-title">Total Invested Amount</h1>
+                <h5 class="text-on-back">{{total_investments}}</h5>
+            </div>
+            <div class="col-lg-6 col-12 text-center">
+                <h1 class="profile-title">Total Returns</h1>
+                <h5 class="text-on-back">{{total_returns}}</h5>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row ml-4 mr-4" id="overallChartContainer">
+    <div class="col-12 col-xl-7 ml-auto mr-auto pl-4 pr-4">
+        <div class="card card-chart mt-4 mb-5">
+        <div class="card-header ">
+            <div class="row">
+                <div class="col-sm-6 text-left">
+                    <!-- <h5 class="card-category">Total Shipments</h5> -->
+                    <h2 class="card-title">Overall Investments</h2>
+                </div>
+            </div>
+        </div>
+        <div class="card-body text-center">
+            <div class="chart-area text-center">
+                <canvas id="overallChart" style="max-width: 900px;" class="ml-auto mr-auto"></canvas>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+
+<div id="misc_charts"></div>
+{% endblock %}
+
+{% block footer %}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+<script>
+
+const overallChart = $("#overallChart").get(0);
+investment_data = {{ investments_json|safe }}
+//const investment_data =  investments_json
+const ctx = overallChart.getContext('2d')
+
+if(investment_data.length < 1) {
+    $("#overallChartContainer").replaceWith("<h3 class='text-danger text-center' >Looks like you've yet to invest in any stock. Start investing now!")
+}
+
+const chartColor = "#FFFFFF";
+
+const generateGradient = () => {
+    const gradientStroke = ctx.createLinearGradient(500, 0, 100, 0);
+    gradientStroke.addColorStop(0, `rgb(${Math.floor(Math.random() * 250)}, ${Math.floor(Math.random() * 250)}, ${Math.floor(Math.random() * 250)})`);
+    gradientStroke.addColorStop(1, chartColor);
+
+    return gradientStroke
+}
+const gradientFill = ctx.createLinearGradient(0, 170, 0, 50);
+gradientFill.addColorStop(0, "rgba(128, 182, 244, 0)");
+gradientFill.addColorStop(1, "rgba(249, 99, 59, 0.40)");
+
+
+const conf = {
+    type : 'line',
+    data : {
+        labels : Object.keys(investment_data.sort((a,b) => a.plot_coords.split(",").length > b.plot_coords.split(",").length)[0].plot_coords.split(",")).map(day => "Day " + day),
+        datasets : investment_data.map(obj => {
+            return {
+                label : obj.company.name,
+                data : obj.plot_coords.split(",").map(val => parseFloat(val)),
+                pointBorderWidth: 2,
+                pointHoverRadius: 4,
+                pointHoverBorderWidth: 1,
+                pointRadius: 4,
+                fill:false,
+                backgroundColor : generateGradient(),
+                borderColor: generateGradient(),
+                borderWidth: 2,
+            }
+        }),
+    },
+    options: {
+        responsive: true,
+        title: {
+            display: true,
+            text: 'Overall Performance Chart'
+        },
+        tooltips: {
+            mode: 'index',
+            intersect: false,
+        },
+        hover: {
+            mode: 'nearest',
+            intersect: true
+        },
+        scales: {
+            xAxes: [{
+                display: true,
+                scaleLabel: {
+                    display: true,
+                    labelString: 'Day'
+                }
+            }],
+            yAxes: [{
+                display: true,
+                scaleLabel: {
+                    display: true,
+                    labelString: 'Price'
+                }
+            }]
+        },
+    }
+}
+
+if(investment_data.length > 1) {
+    new Chart(ctx, conf)
+}
+else if(investment_data.length == 1) {
+    $("#overallChartContainer").remove()
+}
+
+const container = $("#misc_charts");
+
+investment_data.forEach(data => {
+    const canvas = document.createElement("canvas")
+
+    container.append(`<div class="row ml-4 mr-4" data-id='${data.id}' >
+    <div class="col-12 col-xl-7 ml-auto mr-auto pl-4 pr-4">
+        <div class="card card-chart mt-4 mb-5">
+        <div class="card-header ">
+            <div class="row">
+                <div class="col-sm-6 text-left">
+                    <!-- <h5 class="card-category">Total Shipments</h5> -->
+                    <h2 class="card-title">${data.company.name}</h2>
+                </div>
+                <div class="col-sm-6 text-right" >
+                    Invested Amount : Rs.${data.money - data.money_left}<br>
+                    Returns : Rs.${data.money - data.money_left + data.investment_returned}<br>
+                    Balance left: Rs.${data.money_left}
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="chart-area unused">
+            </div>
+
+            <div class='text-right' >
+                <button class='btn btn-primary redeem mr-4 mb-3' >Redeem</button>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>`)
+
+    container.find(".chart-area.unused").append(canvas).removeClass("unused")
+    container.find(".redeem").click(e => {
+        redeemInvestment(data)
+    }).removeClass("redeem")
+
+    canvas.className = 'ml-auto mr-auto'
+    canvas.style.maxWidth = "900px"
+    const plots = data.plot_coords.split(",").map(v => parseFloat(v))
+    const buy = []
+    const sell = []
+
+    const _b = data.buy_coords.split(",").map(v => parseInt(v)), _s = data.sell_coords.split(',').map(v => parseInt(v))
+
+    plots.forEach( (plot,i) => {
+        buy.push(_b.indexOf(i) > -1 ? plot : null)
+        sell.push(_s.indexOf(i) > -1 ? plot : null)
+    })
+    // console.log(buy, _b, plots)
+
+    new Chart(canvas.getContext('2d'), {
+        type: 'line',
+        responsive: true,
+        data: {
+            labels: Object.keys(plots).map(key => 'Day ' + key),
+            datasets : [{
+                label : "Stocks Purchased at",
+                fill: false,
+                pointRadius: 10,
+                pointHoverRadius: 15,
+                showLine: false, // no line shown
+                data : buy,
+                backgroundColor: 'rgb(250, 250, 250)',
+                pointStyle : 'triangle'
+            },
+            {
+                label : "Stocks Sold at",
+                fill: false,
+                pointRadius: 10,
+                pointHoverRadius: 15,
+                showLine: false, // no line shown
+                data : sell,
+                backgroundColor: 'rgb(231, 223, 250)',
+                pointStyle : 'circle'
+            },
+            {
+                label : "Stock Prices",
+                borderColor: "#f96332",
+                // pointBorderColor: "#FFF",
+                // pointBackgroundColor: "#f96332",
+                // pointBorderWidth: 2,
+                // pointHoverRadius: 4,
+                // pointHoverBorderWidth: 1,
+                pointRadius: 0,
+                // fill: true,
+                backgroundColor: gradientFill,
+                // borderWidth: 2,
+                data : plots,
+            }]
+        },
+
+        options : {
+            responsive: true,
+            title: {
+                display: true,
+                text: data.company.name + ' Stock Chart'
+            },
+            tooltips: {
+                mode: 'index',
+                intersect: false,
+            },
+            hover: {
+                mode: 'nearest',
+                intersect: true
+            },
+            scales: {
+                xAxes: [{
+                    display: true,
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Day'
+                    }
+                }],
+                yAxes: [{
+                    display: true,
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Price'
+                    }
+                }]
+            },
+            elements: {
+                point: {
+                    // pointStyle: 'triangle'
+                }
+            }
+        }
+    })
+})
+
+
+function redeemInvestment(data) {
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, redeem it!'
+    }).then((result) => {
+        if (result.value) {
+            
+            return Promise.resolve($.post("{% url 'redeem' %}", {id:data.id, csrfmiddlewaretoken : "{{ csrf_token }}"})).then(() => {
+                Swal.fire(
+                    'Redeemed!',
+                    'Your investment has been cashed out.',
+                    'success'
+                )
+
+                $("[data-id='" + data.id + "'").remove()
+
+                window.location.reload()
+            })
+        }
+    })
+
+}
+</script>
+{% endblock %}
