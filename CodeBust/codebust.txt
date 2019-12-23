@@ -1,0 +1,39 @@
+Description: 
+
+Current Hiring Scenario
+Recruiters has to go through each profile of a candidate
+Example : Resume, Github, LinkedIn
+Check if they meet job description
+Yes?
+Should they be interviewed?
+Have we overlooked someone, who is better?
+Shouldn’t they be interviewed first?
+They don’t?
+Should the profile be saved for future use?
+------------------------------------------------------------
+What can make this easier?
+
+Analyse all of candidate’s profile at a click
+Resume, LinkedIn, Github, Behance, Dribble
+Visualisation of core competencies
+Analytics related to job description
+Creation of a priority list
+Comprehensive grading system
+------------------------------------------------------------
+
+Contents : 
+Tech Stack : Flask/Python
+             Javascript JS
+             Bootstrap
+             NLP ( Machine Learning )
+             HTML/CSS
+             Tech Analyzation using Microsoft Azure Services 
+Main folder is of Flask-Backend with the main repository being the backend of the the project. 
+
+
+--------------------------------------------------------------------
+
+To run the app locally : 
+Set up the files using requirements.txt
+
+              
