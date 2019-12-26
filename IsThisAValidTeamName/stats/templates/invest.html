@@ -1,0 +1,124 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Invest{% endblock %}
+{% block body %}class='login-page'{% endblock %}
+
+{% block nav %}
+<nav class="navbar navbar-expand-lg  fixed-top navbar-transparent " color-on-scroll="300">
+    <div class="container">
+        <div class="navbar-translate">
+            <a href="{% url 'index' %}" class="navbar-brand" data-placement="bottom" >
+                <img src="{% static 'img/fifthstrategy_fulllogowhite_TGL.svg' %}">
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-bar bar1"></span>
+                <span class="navbar-toggler-bar bar2"></span>
+                <span class="navbar-toggler-bar bar3"></span>
+            </button>
+        </div>
+        <div class="collapse navbar-collapse" id="navigation">
+            <div class="navbar-collapse-header">
+                <div class="row">
+                    <div class="col-6 collapse-brand">
+                        <a href="{% url 'index' %}">
+                            Fifth Strategy
+                        </a>
+                    </div>
+                    <div class="col-6 collapse-close text-right">
+                        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+                            <i class="tim-icons icon-simple-remove"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a href="{% url 'index' %}" class="nav-link">
+                        <i class="fas fa-home"></i> Home
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+{% endblock %}
+
+{% block content %}
+<div class="squares square1"></div>
+<div class="squares square2"></div>
+<div class="squares square3"></div>
+<div class="squares square4"></div>
+<div class="squares square5"></div>
+<div class="squares square6"></div>
+<div class="page-header">
+    <div class="page-header-image"></div>
+    <div class="container">
+        <div class="col-lg-5 col-md-8 mx-auto">
+            <div class="card card-login">
+                <form class="form" method="POST" action="" id="investForm">
+                    {% csrf_token %}
+                    <div class="card-header">
+                        <img class="card-img mt-0" src="{% static 'img/login-bg.png' %}" alt="Card image">
+                        <h4 class="card-title ml-3" style="color:#fff">Invest</h4>
+                    </div>
+                    <div class="card-body mt-4">
+                        <div id="message"></div>
+                        <div class="input-group input-lg">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-calendar-day"></i></span>
+                            </div>
+                            <input type="text" class="form-control" placeholder="No of days" name=days >
+                        </div>
+                        <div class="input-group input-lg">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-money-bill"></i></span>
+                            </div>
+                            <input type="text" class="form-control" placeholder="Money" name=money >
+                        </div>
+                        <!-- <div class="input-group input-lg">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-asterisk"></i></span>
+                            </div>
+                            <input type="text" class="form-control" placeholder="Risk Level" name=risk >
+                        </div> -->
+                        
+                        <div class="form-group input-lg">
+                            <select name="company" id="company" class="selectpicker" >
+                                <option value="0">Select Company</option>
+                                {% for company in companies %}
+                                <option value="{{ company.id }}">{{ company.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="card-footer text-center">
+                        <button class="btn btn-primary btn-round btn-lg btn-block">Invest</button>
+                    </div>
+                    <div class="pull-left ml-3 mb-3">
+                        <!-- <h6>
+                            <a href="{% url 'register' %}" class="link footer-link">Create Account</a>
+                        </h6> -->
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block footer %}
+<script>
+const form = $("#investForm").submit(e => {
+    e.preventDefault();
+
+    const div = form.find("#message")
+
+    div.html("<h3 class='text-center text-info' ><i class='fas fa-spin fa-spinner' ></i> Please wait while we analyze the stocks for you.")
+
+    $.post("", form.serialize(), resp => {
+        window.location.href = '{% url "index" %}'
+    }).error(err => {
+        div.html("<h3 class='text-center text-danger' >Could not contact server")
+    })
+})
+</script>
+{% endblock %}

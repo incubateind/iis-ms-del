@@ -1,0 +1,43 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>{% block title %}{% endblock %}</title>
+
+        
+        <!--     Fonts and icons     -->
+        <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,600,700,800" rel="stylesheet" />
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="{% static 'css/nucleo-icons.css' %}">
+        <link rel="stylesheet" href="{% static 'css/theme.css' %}">
+        <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    </head>
+    <body {% block body %} {%endblock%}>
+        {% block nav %}
+
+        {% endblock %}
+
+        {% block content %}
+
+        {% endblock %}
+
+
+        <script src="{% static 'js/jquery.min.js' %}"></script>
+        <script src="{% static 'js/popper.min.js' %}"></script>
+        <script src="{% static 'js/bootstrap.min.js' %}"></script>
+        <script src="{% static 'js/perfect-scrollbar.jquery.min.js' %}"></script>
+        <script src="{% static 'js/nouislider.min.js' %}"></script>
+        <script src="{% static 'js/slick.js' %}"></script>
+        <script src="{% static 'js/anime.min.js' %}"></script>
+        <script src="{% static 'js/chartjs.min.js' %}"></script>
+        <script src="{% static 'js/bootstrap-selectpicker.js' %}"></script>
+        <script src="{% static 'js/blk-design-system-pro.min.js' %}"></script>
+        {% block footer %}
+
+        {% endblock %}
+    </body>
+</html>

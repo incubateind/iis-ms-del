@@ -1,0 +1,27 @@
+.login-page {
+    overflow-x:hidden;
+}
+
+.navbar-brand img {
+    height:60px;
+    border-radius: 0px;
+}
+
+.home-nav .nav-link:hover {
+    background: #e14eca;
+    background-image: linear-gradient(to bottom left,#e14eca,#ba54f5,#e14eca);
+    background-size: 210% 210%;
+    background-position: 100% 0;
+}
+
+/* .profile-page {
+
+} */
+
+.profile-page .page-header {
+    min-height: 350px;
+}
+
+.bootstrap-select:not(.show) .dropdown-menu:not(.inner) {
+    display:none!important;
+}
