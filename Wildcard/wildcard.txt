@@ -1,0 +1,14 @@
+Description of the project:
+
+We are making a software that would be able to detect violence scenarios in the CCTV live 
+footage which would decrease manual surveillance to a great extent as the person surveilling wont be attentive the whole time, he would be surveilling and this would cause human error and may lead to some big issue.
+We help here in this window to detect any suspicious activity and alert the survelling guy so that he could check whether the alert needs some serious attention or not. Or if it needs police intervention or not and act accordingly with the help of our 
+app which will be installed in his phone and with a tap of button he could act upon. With a tap he could call the nearest police station and alert the nearest ambulance if required. And both the parties could act upon as per their rules.
+
+Contents :
+
+The project directory contains
+
+Rakshak App ( Contains all the app file built with the help of Flutter)
+wildcard.pptx (Our presentation)
+submission (Contains our Deep Learning Model)
