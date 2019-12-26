@@ -1,0 +1,41 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #09d3ac;
+}
+
+
+.navbar-light .navbar-brand {
+  color: #218838;
+  font-weight: bold;
+}
+
+
+nav.navbar{
+  border-radius: 10px;
+}
+.navbar-container .navbar .nav-item {
+  border-radius: 30px !important; 
+}
+.nav-item :hover{
+  background-color: #218838;
+  border-radius: 5px;
+  transition: background-color .2s ease-in;
+}
