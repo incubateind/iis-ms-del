@@ -1,0 +1,27 @@
+# KickStarters
+
+A platform which allow start-ups in their bootstrap phase to shell out less bugs from their pockets and make them reach out to the maximum folks, making their brand/product sensation within no-days.
+
+Here on SocialGo, we try to capture data from most of the social platforms like Facebook, Instagram, Twitter, TikTok etc for different users who are popular icon in their region and that too for different categories like fitness, food, fashion, grooming etc.
+After fetching data from social platform, we process them using our model - through which we tell brand/organization that who all are having a great influence in specific region and how much they can help in growing your presence in that region.
+
+Next they need to send quote/request to their desired personality through which they wand to advertise their product.
+
+## Content
+
+/app module: 
+ - homeModule
+  -dashboardComponent: This consist of html and ts for rendering dashboard.
+  -homeService: It consist of all the api endpoints.
+
+
+## Hosting project
+
+- Open command line and go to your project directory.
+- Now run 'npm i' to install all the packages or angular dependencies.
+- Now run 'ng serve' and it will build and open application on localhost with available port.
+
+## Dependencies
+- We are using MapMyIndia places api to bind our selection dropdown data.
+- We are also using azure api,
+'https://filterresults.azurewebsites.net/api/Function1?code=vNGQl/1QqlQRx7PSVaJ3937MNA6QSezvHUwhpIKoUHzhr4EXmecsFA==&targetArea=Faridabad&buisnessName=&concept=fitness' to fetch users data depending upon search criteria from the application.
