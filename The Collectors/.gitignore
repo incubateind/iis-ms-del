@@ -1,0 +1,21 @@
+logs
+*.log
+npm-debug.log*
+.DS_Store
+
+coverage
+node_modules
+build
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+#Pgadmin data
+pgadmin-data
+
+#postgres volumes
+postgres-data
+
+# Sequelize Config file
+/src/server/config/config.json

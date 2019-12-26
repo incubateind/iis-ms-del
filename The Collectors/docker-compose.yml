@@ -1,0 +1,38 @@
+version: "3"
+services:
+  app:
+    image: mshackathon/help:latest
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    container_name: help
+    restart: always
+    ports:
+      - 3000:3000
+      - 3001:3001
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+
+  postgres:
+    image: postgres:11-alpine
+    container_name: postgres-mshackathon
+    restart: always
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_PASSWORD=mshackathon
+      - POSTGRES_DB=help
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin-mshackathon
+    ports:
+      - 8888:80
+    volumes:
+      - ./pgadmin-data:/var/lib/pgadmin
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=demo@safeassure.app
+      - PGADMIN_DEFAULT_PASSWORD=Demo@123
