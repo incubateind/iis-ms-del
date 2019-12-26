@@ -1,0 +1,15 @@
+{
+    "development": {
+        "username": "seth",
+        "password": "@arpit",
+        "database": "citysolver",
+        "host": "127.0.0.1",
+        "dialect": "mysql",
+        "timezone": "+05:30",
+        "logging": true
+    },
+   
+  "use_env_variable":"development"
+  
+}
+

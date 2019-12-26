@@ -1,0 +1,13 @@
+
+CitySolver
+
+Description:- The project is a prototype of an innovitive solution through which common people can complain about issues affecting them directly to the concerned authority.It will reduce the current present communication Gap between common citizens and the authority . The authority is provided with a panel through which it can check the issues concerning their authorities.Other Citizens may also upvote or downvote a problem depending on their knowledge about the existence of the issue.Location(MAPMYINDIA) is also fetched based on the address so as to add one more layer to the project
+
+Contents Of Project Directory
+NodeJs Api's
+AngularJs Front Files
+
+Ways to host your project on the localhost.
+
+The project can be deployed by installing required npm modules and setting up the localhost so that it point to "ByteHackers" repositery on the hosting server(eg.apache,nginx) etc or running npm start to run the project after setting up the mysql on the localhost.
+
